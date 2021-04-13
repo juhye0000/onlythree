@@ -6,8 +6,7 @@
 ###팀원 소개
 팀원명 | 역할 | 담당
 --- | --- | ---
-배재현 | 조장 | * 배포
-* SpringBoot에 bootstrap 템플릿 사용방법 조사 및 적용
+배재현 | 조장 | * 배포</br>* SpringBoot에 bootstrap 템플릿 사용방법 조사 및 적용
 * DB table 설계
 * python web crawlin을 통해 레시피 정보 DB에 insert
 * 레시피 목록 조회(재료별/방법별/테마별/난이도별) 구현
