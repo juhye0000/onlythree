@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.onlythree.dao.IngredientDAO">
+	<select id = "selectIngredient" resultType = "ingredient" parameterType = "String">
+		<![CDATA[
+		select * from tb_ingredient
+		where ingredient_id = #{ingredient_id}
+		]]>
+	</select>
+	<select id = "selectAllIngredientList" resultType = "ingredient">
+		<![CDATA[
+		select * from tb_ingredient order by ingredient_id
+		]]>
+	</select>
+	<insert id = "insertIngredient" parameterType = "ingredient">
+		<![CDATA[
+		insert into tb_ingredient(ingredient_id, ingredient_category, ingredient_name)
+		values(#{ingredient_id}, #{ingredient_category}, #{ingredient_name})
+		]]>
+	</insert>
+	<update id = "updateIngredientName" parameterType = "ingredient">
+		<![CDATA[
+			update tb_ingredient
+			set ingredient_name = #{ingredient_name}
+			where ingredient_id = #{ingredient_id}
+		]]>	
+	</update>
+	<delete id = "deleteIngredient" parameterType = "String">
+		<![CDATA[
+			delete from tb_ingredient
+			where ingredient_id = #{ingredient_id}
+		]]>
+	</delete>
+	<!-- 0423 재현추가 -->
+	<select id = "selectDistinctIngredientList" resultType = "ingredient">
+		<![CDATA[
+		select distinct(ingredient_category) from tb_ingredient
+		]]>
+	</select>
+	
+	<!-- 0423 재현추가 -->
+	<select id = "selectAllIngredientListByCategory" resultType = "String" parameterType = "String">
+		<![CDATA[
+		select ingredient_name from tb_ingredient where ingredient_category = #{ingredient_category} 
+		]]>
+	</select>
+</mapper>

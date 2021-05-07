@@ -1,0 +1,68 @@
+#fullform{
+	height: auto; 
+	width: 100%;
+	padding: 0 10%;
+}
+
+#preferIngre {
+	width:100%; 
+	height: auto; 
+	margin:0 0 36px;
+}
+
+.surveyRow {
+	height: 70px;
+	width:100%;
+	margin-bottom: 20px;
+
+}
+
+.surveyBig{
+	width:35%; 
+	Padding: 5px;
+	margin-right:10px;
+	Float: left;
+}
+
+.surveySmall{
+	width:35%; 
+	Padding: 5px;
+	Float: left;
+}
+
+.select {
+	width: 100%;
+	height:30px;
+}
+
+.surveySmall_sub{
+	width: 100%;
+	height:30px;
+}
+
+.delBtndiv{
+	display:inline-block;
+}
+
+.delBtnclass{
+    width: 10%;
+    height: 100%;
+    float: left;
+    padding: 10px;
+    margin-top: 3%;
+    margin-left: 3%;
+
+}
+
+
+#addBtndiv1{
+ 	width:100%;
+	text-align:center;
+}
+
+#addBtndiv2{
+	  display:inline-block;
+	 
+}
+
+
