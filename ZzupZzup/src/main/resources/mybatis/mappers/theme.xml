@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.onlythree.dao.ThemeDAO">
+	<select id = "selectTheme" resultType = "theme" parameterType = "String">
+		<![CDATA[
+		select * from tb_theme
+		where theme_id = #{theme_id}
+		]]>
+	</select>
+	<select id = "selectAllThemeList" resultType = "theme">
+		<![CDATA[
+		select * from tb_theme order by theme_id
+		]]>
+	</select>
+	<insert id = "insertTheme" parameterType = "theme">
+		<![CDATA[
+		insert into tb_theme(theme_id, theme_title)
+		values(#{theme_id}, #{theme_title})
+		]]>
+	</insert>
+	<update id = "updateThemeTitle" parameterType = "theme">
+		<![CDATA[
+			update tb_theme
+			set theme_title = #{theme_title}
+			where theme_id = #{theme_id}
+		]]>	
+	</update>
+	<delete id = "deleteTheme" parameterType = "String">
+		<![CDATA[
+			delete from tb_theme
+			where theme_id = #{theme_id}
+		]]>
+	</delete>
+</mapper>

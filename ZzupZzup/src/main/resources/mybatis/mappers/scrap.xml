@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.onlythree.dao.ScrapDAO">
+	<!-- 0430 주혜 수정 - 스크랩 -->
+	<insert id = "insertScrap" parameterType = "scrap">
+		<![CDATA[
+		insert into tb_recipe_scrap(SCRAP_ID, SCRAP_TITLE, SCRAP_DATE, MEMBER_ID, RECIPE_ID)
+		values(#{SCRAP_ID}, #{SCRAP_TITLE}, sysdate, #{MEMBER_ID}, #{RECIPE_ID})
+		]]>
+	</insert>
+	
+	<!-- 스크랩타이틀 변경 -->
+	<update id = "updateScrapTitle" parameterType = "scrap">
+		<![CDATA[
+		update tb_recipe_scrap
+		set scrap_title = #{scrap_title}
+		where scrap_id = #{scrap_id}
+		]]>	
+	</update>
+	
+	<!-- scrap_id로 선택 -->
+	<select id = "selectScrapByID" resultType = "scrap" parameterType = "int">
+		<![CDATA[
+		select * from tb_recipe_scrap
+		where scrap_id = #{scrap_id}
+		]]>
+	</select>
+	
+	<!-- 회원 스크랩 목록 -->
+	<select id = "selectAllScrapList" resultType = "scrap" parameterType = "String">
+		<![CDATA[
+		select * from tb_recipe_scrap
+		order by member_id
+		]]>
+	</select>
+	
+	<!-- 스크랩 삭제 where scrap_id = #{scrap_id} 대문자로 바꿈, parameterType = "String"에서 integer로 바꿈-->
+	<delete id = "deleteScrap" parameterType = "integer">
+		<![CDATA[
+			delete from tb_recipe_scrap
+			where scrap_id = #{SCRAP_ID}
+		]]>
+	</delete>
+	
+	<!-- 0430 주혜 수정 -->
+	<select id = "selectScrapByTitle" resultType = "Scrap" parameterType = "String">
+		<![CDATA[
+		select *
+		from tb_recipe_scrap
+		where scrap_title = #{SCRAP_TITLE}
+		]]>
+	</select>
+	<!-- 0430 주혜 추가 -->
+	<select id = "selectScrapGenie" resultType = "Scrap" parameterType = "String">
+		<![CDATA[
+		select recipe_id
+		from tb_recipe_scrap
+		where member_id = #{member_id} and scrap_title = #{scrap_title}
+		]]>
+	</select>
+	
+	<!-- 0428 주혜 추가 -->
+	<select id="selectMaxScrapID" resultType="int">
+		<![CDATA[
+		select max(SCRAP_ID) from tb_recipe_scrap
+		]]>
+	</select>
+	
+	
+	<!-- 0427 재현 마이페이지 회원 스크랩 목록 -->
+	<select id = "getMyScrap" resultType = "scrap" parameterType = "String">
+		<![CDATA[
+		select 	s.scrap_id as SCRAP_ID,
+				s.scrap_title as SCRAP_TITLE,
+				s.scrap_date as SCRAP_DATE,
+				s.member_id as MEMBER_ID,
+				s.recipe_id as RECIPE_ID,
+				r.title as TITLE,
+				r.mainpic1_url as MAINPIC1_URL
+		from 	tb_recipe_scrap s, tb_recipe r
+		where	s.recipe_id = r.recipe_id
+		and 	s.member_id =#{MEMBER_ID}
+		]]>
+	</select>
+	
+	<!-- 0504 재현 마이페이지 스크랩 개수-->
+	<select id = "countMyScrapRecipe" resultType = "int" parameterType = "String">
+		<![CDATA[
+		select count(*) from tb_recipe_scrap
+		where member_id=#{id }
+		]]>
+	</select>
+	
+</mapper>

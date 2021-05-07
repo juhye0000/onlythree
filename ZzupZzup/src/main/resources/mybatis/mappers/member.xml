@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.onlythree.dao.MemberDAO">
+	<select id="selectMember" resultType="member" parameterType="String">
+		<![CDATA[
+		select * 
+		from tb_member
+		where member_id=#{id}
+		]]>
+	</select>
+
+
+	<select id="selectMemberProfile" resultType="member" parameterType="String">
+		<![CDATA[
+		select MEMBER_ID, NAME, NICKNAME, EMAIL, PHONE, AGE 
+		from tb_member
+		where member_id=#{id}
+		]]>
+	</select>
+	
+	
+	<!-- 0429 재현 수정 -->
+	<insert id="insertMemberProfile" parameterType="member">
+		<![CDATA[
+		insert into tb_member(member_id,name,password,nickname,email,phone,birthyear,gender,PREFERRED_INGR,UNPREFERRED_INGR,ALLERGY_INGR,JOIN_DATE,MEM_IMG_URL)
+		values(#{member_id},#{name},#{password},#{nickname},#{email},#{phone},#{birthyear},#{gender},'없음,','없음,','없음,',sysdate,'https://bootdey.com/img/Content/avatar/avatar7.png')
+		]]>
+	</insert>
+	
+	<!-- 0423 재현추가 -->
+	<select id="selectPreferIngre" resultType="String" parameterType="String">
+		<![CDATA[
+		select PREFERRED_INGR
+		from tb_member
+		where member_id=#{id}
+		]]>
+	</select>
+	
+	<!-- 0423 재현추가 -->
+	<select id="selectUnPreferIngre" resultType="String" parameterType="String">
+		<![CDATA[
+		select UNPREFERRED_INGR
+		from tb_member
+		where member_id=#{id}
+		]]>
+	</select>
+	
+	<!-- 0423 재현추가 -->
+	<select id="selectAllergyIngre" resultType="String" parameterType="String">
+		<![CDATA[
+		select ALLERGY_INGR
+		from tb_member
+		where member_id=#{id}
+		]]>
+	</select>
+
+
+	<!-- 0423 재현추가 -->
+	<update id="updateMemberSurveyPrefer" parameterType="member">
+		<![CDATA[
+		update tb_member 
+		set preferred_ingr= #{preferred_ingr}
+		where member_id=#{member_id}
+		
+		]]>
+	</update>
+	
+	<!-- 0423 재현추가 -->
+	<update id="updateMemberSurveyUnprefer" parameterType="member">
+		<![CDATA[
+		update tb_member 
+		set UNPREFERRED_INGR= #{unpreferred_ingr}
+		where member_id=#{member_id}
+		
+		]]>
+	</update>
+	
+	<!-- 0423 재현추가 -->
+	<update id="updateMemberSurveyAllergy" parameterType="member">
+		<![CDATA[
+		update tb_member 
+		set ALLERGY_INGR= #{allergy_ingr}
+		where member_id=#{member_id}
+		
+		]]>
+	</update>
+	
+	
+	<!-- 0423 주혜 관리자 페이지 -->
+	<select id = "selectAllMemberList" resultType = "member">
+	<![CDATA[
+		select * from tb_member order by member_id
+	]]>
+	</select>
+	
+	<!-- 0423 주혜 관리자 페이지 -->
+	<delete id = "deleteMember" parameterType = "String">
+	<![CDATA[
+			delete from tb_member
+			where member_id = #{member_id}
+	]]>
+	</delete>
+	
+	
+	<!-- 0430 재현추가 -->
+	<update id="updateMemberProfile" parameterType="member">
+		<![CDATA[
+		update 	tb_member 
+		set 	name = #{name},
+				nickname= #{nickname},
+				email= #{email},
+				phone= #{phone},
+				birthyear= #{birthyear},
+				mem_img_url=#{mem_img_url},
+				CHANGE_DATE=sysdate
+		where 	member_id= #{member_id}
+		]]>
+	</update>
+	
+	
+</mapper>
+

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.onlythree.dao.MethodDAO">
+	<select id = "selectMethod" resultType = "method" parameterType = "String">
+		<![CDATA[
+		select * from tb_method
+		where method_id = #{method_id}
+		]]>
+	</select>
+	<select id = "selectAllMethodList" resultType = "method">
+		<![CDATA[
+		select * from tb_method order by method_id
+		]]>
+	</select>
+	<insert id = "insertMethod" parameterType = "method">
+		<![CDATA[
+		insert into tb_method(method_id, method_title)
+		values(#{method_id}, #{method_title})
+		]]>
+	</insert>
+	<update id = "updateMethodTitle" parameterType = "method">
+		<![CDATA[
+			update tb_method
+			set method_title = #{method_title}
+			where method_id = #{method_id}
+		]]>	
+	</update>
+	<delete id = "deleteMethod" parameterType = "String">
+		<![CDATA[
+			delete from tb_method
+			where method_id = #{method_id}
+		]]>
+	</delete>
+</mapper>

@@ -3,10 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-	<mappers>
-		<mapper resource="mybatis/mappers/theme.xml" />
-		<mapper resource="mybatis/mappers/method.xml" />
-		<mapper resource="mybatis/mappers/cookLevel.xml"/> 
-		<mapper resource="mybatis/mappers/ingredient.xml"/> 
-	</mappers>
+ <mappers>
+   	<mapper resource="mybatis/mappers/member.xml"/>   
+   	<mapper resource="mybatis/mappers/ingredient.xml"/> 
+   	<mapper resource="mybatis/mappers/theme.xml" />
+	<mapper resource="mybatis/mappers/method.xml" />
+	<mapper resource="mybatis/mappers/cookLevel.xml"/> 
+  	<mapper resource="mybatis/mappers/recipe.xml"/>
+  	<mapper resource="mybatis/mappers/scrap.xml"/>
+ </mappers>
 </configuration>

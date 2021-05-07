@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace = "com.onlythree.dao.CookLevelDAO">
+	<select id = "selectCookLevel" resultType = "cookLevel" parameterType = "String">
+		<![CDATA[
+		select * from tb_cook_level
+		where level_id = #{level_id}
+		]]>
+	</select>
+	<select id = "selectAllCookLevelList" resultType = "cookLevel">
+		<![CDATA[
+		select * from tb_cook_level order by level_id
+		]]>
+	</select>
+	<insert id = "insertCookLevel" parameterType = "cookLevel">
+		<![CDATA[
+		insert into tb_cook_level(level_id, level_title)
+		values(#{level_id}, #{level_title})
+		]]>
+	</insert>
+	<update id = "updateCookLevelTitle" parameterType = "cookLevel">
+		<![CDATA[
+			update tb_cook_level
+			set level_title = #{level_title}
+			where level_id = #{level_id}
+		]]>	
+	</update>
+	<delete id = "deleteCookLevel" parameterType = "String">
+		<![CDATA[
+			delete from tb_cook_level
+			where level_id = #{level_id}
+		]]>
+	</delete>
+</mapper>

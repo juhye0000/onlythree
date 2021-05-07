@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+							"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.onlythree.dao.RecipeDAO">
+<!-- 0423 우리 -->
+<select id="getRecipe" resultType="Recipe" parameterType="int">
+      <![CDATA[  
+      select r.RECIPE_ID as RECIPE_ID, r.TITLE as TITLE, r.MEMBER_ID as MEMBER_ID, b.NICKNAME as NICKNAME,
+            r.INGREDIENT_CATEGORY as INGREDIENT_CATEGORY,
+               r.METHOD_ID as METHOD_ID, m.METHOD_TITLE as METHOD_TITLE, r.THEME_ID as THEME_ID, t.THEME_TITLE as THEME_TITLE, r.LEVEL_ID as LEVEL_ID, l.LEVEL_TITLE as LEVEL_TITLE,
+               r.CREATED_DATE as CREATED_DATE, r.UPDATED_DATE as UPDATED_DATE, r.TAG as TAG, r.RECIPE_HITS as RECIPE_HITS, r.TIME as TIME, r.MEALS_FOR as MEALS_FOR,
+               r.MAINPIC1_URL as MAINPIC1_URL, r.MAINPIC2_URL as MAINPIC2_URL, r.MAINPIC3_URL as MAINPIC3_URL,
+               r.FINALPIC1_URL as FINALPIC1_URL, r.FINALPIC2_URL as FINALPIC2_URL, r.FINALPIC3_URL as FINALPIC3_URL,
+               r.INGREDIENT as INGREDIENT, r.SOURCE as SOURCE
+               from TB_RECIPE r, TB_METHOD m, TB_THEME t, TB_COOK_LEVEL l, TB_MEMBER b
+         where
+         r.RECIPE_ID=#{RECIPE_ID} and r.member_id = b.member_id and m.method_id = r.method_id and t.theme_id = r.theme_id and l.level_id=r.level_id
+      ]]>
+   </select>
+
+
+	<select id="getRecipeContent" resultType="recipecontent" parameterType="Recipe">
+		<![CDATA[  
+		select * from TB_RECIPE_CONTENT
+		where
+		RECIPE_ID=#{RECIPE_ID }
+		]]>
+	</select>
+	
+	<!-- 0506 주혜 추가 -->
+	<update id="updateRecipeHits" parameterType="int">
+		<![CDATA[
+			UPDATE TB_RECIPE
+			SET RECIPE_HITS = RECIPE_HITS + 1
+			WHERE RECIPE_ID = #{RECIPE_ID}
+		]]>
+	</update>
+
+	<select id="insertRecipe" parameterType="Recipe">
+		<![CDATA[
+		insert into TB_RECIPE (RECIPE_ID, TITLE, MEMBER_ID, INGREDIENT_CATEGORY, METHOD_ID, THEME_ID, LEVEL_ID,
+							   CREATED_DATE, TAG, RECIPE_HITS, TIME, MEALS_FOR,
+							   MAINPIC1_URL, INGREDIENT, SOURCE)
+		values(#{RECIPE_ID},#{TITLE},#{MEMBER_ID},#{INGREDIENT_CATEGORY},#{METHOD_ID},#{THEME_ID},#{LEVEL_ID},sysdate,#{TAG},#{RECIPE_HITS},#{TIME},#{MEALS_FOR},#{MAINPIC1_URL},#{INGREDIENT},#{SOURCE})		
+		]]>
+	</select>
+	<insert id="insertRecipeContent" parameterType="RecipeContent">
+		<![CDATA[
+		insert into TB_RECIPE_CONTENT (RECIPE_ID, RECIPE_STEP, CONTENT_CONTENT)
+		values(#{RECIPE_ID},#{RECIPE_STEP},#{CONTENT_CONTENT})
+		]]>
+	</insert>
+	<select id="selectMaxRecipeID" resultType="int">
+		<![CDATA[
+		select max(RECIPE_ID) from TB_RECIPE
+		]]>
+	</select>
+
+
+	<!-- 0423 재현 -->
+	<select id="selectMyRecipetitle" resultType="String" parameterType="String">
+		<![CDATA[  
+		select title from TB_RECIPE
+		where
+		member_id=#{id }
+		]]>
+	</select>
+	<!-- 0423 재현 -->
+	<select id="selectMyRecipeinfo" resultType="Recipe" parameterType="String">
+		<![CDATA[  
+		select * 
+		from TB_RECIPE
+		where
+		member_id=#{id }
+		]]>
+	</select>
+
+
+
+	<!-- 0423 주혜 기가지니 -->
+	<select id="selectRecipeId" resultType="int" parameterType="String">
+		<![CDATA[
+			select recipe_id
+			from tb_recipe
+			where title like '%'||#{search}||'%'
+		]]>
+	</select>
+<!-- 0430 주혜 변경사항 	
+	<select id="selectRecipeContent" resultType="recipecontent"
+		parameterType="String">
+		<![CDATA[
+			select * from TB_RECIPE_CONTENT
+			where RECIPE_ID =(select recipe_id
+						        from tb_recipe
+						        where title like '%'||#{search}||'%')
+		]]>
+	</select> -->
+
+	<!-- 0423 주혜 관리자 페이지 -->
+	<select id="selectRecipe" resultType="Recipe" parameterType="int">
+		<![CDATA[
+		select * from TB_RECIPE
+		where RECIPE_ID = #{RECIPE_ID}
+		]]>
+	</select>
+<!-- 	<select id="selectAllRecipeList" resultType="Recipe">
+		<![CDATA[
+		select * from TB_RECIPE order by RECIPE_ID
+		]]>
+	</select> -->
+	
+	<!-- 0503 주혜 수정 -->
+	<select id="selectAllRecipeList" resultType="Recipe">
+		<![CDATA[
+		select r.RECIPE_ID as RECIPE_ID, r.TITLE as TITLE, b.NICKNAME as NICKNAME,
+        	r.INGREDIENT_CATEGORY as INGREDIENT_CATEGORY, m.METHOD_TITLE as METHOD_TITLE, t.THEME_TITLE as THEME_TITLE, l.LEVEL_TITLE as LEVEL_TITLE,
+        	r.CREATED_DATE as CREATED_DATE, r.RECIPE_HITS as RECIPE_HITS, r.MAINPIC1_URL as MAINPIC1_URL
+		from TB_RECIPE r, TB_METHOD m, TB_THEME t, TB_COOK_LEVEL l, TB_MEMBER b
+		where r.member_id = b.member_id and m.method_id = r.method_id and t.theme_id = r.theme_id and l.level_id=r.level_id  order by 1
+		]]>
+	</select>
+	
+	<delete id="deleteRecipe" parameterType="int">
+		<![CDATA[
+			delete from TB_RECIPE
+			where RECIPE_ID = #{RECIPE_ID}
+		]]>
+	</delete>
+
+
+<!-- 0428 -->
+	<!-- 0427 재현 마이페이지 회원 스크랩 목록 -->
+	<select id = "getRecipeInfo" resultType = "Recipe" parameterType = "int">
+		<![CDATA[
+		select 	* from tb_recipe where recipe_id=#{recipe_id}
+		]]>
+	</select>
+	
+	<!-- 0504 주혜 추가 -->
+	<!-- 메인페이지 Best 레시피 -->
+	<select id="selectRecipeHitsTop" resultType="Recipe">
+		<![CDATA[
+		select * from
+		(select * from TB_RECIPE order by RECIPE_HITS desc)
+		where rownum<=6
+		]]>
+	</select>
+	<!-- Best 조회순 리스트 -->
+	<select id="selectRecipeHits" resultType="Recipe">
+		<![CDATA[
+		select * from TB_RECIPE order by RECIPE_HITS desc
+		]]>
+	</select>
+	<!-- 메인페이지 new 레시피 -->
+	<select id="selectRecipeNewTop" resultType="Recipe">
+		<![CDATA[
+		select * from
+    	(select * from TB_RECIPE order by CREATED_DATE desc)
+    	where rownum<=6
+		]]>
+	</select>
+	<!-- New 리스트 -->
+	<select id="selectRecipeNew" resultType="Recipe">
+		<![CDATA[
+		select * from tb_recipe order by CREATED_DATE desc
+		]]>
+	</select>
+	
+	<!-- 0501 주혜 수정 -->
+	<!-- 재료별 리스트 -->
+	<select id="selectRecipeByIngredient" resultType="Recipe" parameterType="String">
+		<![CDATA[
+		select * from TB_RECIPE where INGREDIENT_CATEGORY IN
+		(select INGREDIENT_CATEGORY from TB_INGREDIENT where INGREDIENT_CATEGORY = #{INGREDIENT_CATEGORY})
+		]]>
+	</select>
+	<!-- 테마별 리스트 -->
+	<select id="selectRecipeByTheme" resultType="Recipe" parameterType="String">
+		<![CDATA[
+		select * from TB_RECIPE where THEME_ID =
+		(select THEME_ID from TB_THEME where THEME_TITLE = #{THEME_TITLE})
+		]]>
+	</select>
+	<!-- 방법별 리스트 -->
+	<select id="selectRecipeByMethod" resultType="Recipe" parameterType="String">
+		<![CDATA[
+		select * from TB_RECIPE where METHOD_ID =
+		(select METHOD_ID from TB_METHOD where METHOD_TITLE = #{METHOD_TITLE})
+		]]>
+	</select>
+	<!-- 난이도별 리스트 -->
+	<select id="selectRecipeByLevel" resultType="Recipe" parameterType="String">
+		<![CDATA[
+		select * from TB_RECIPE where LEVEL_ID =
+		(select LEVEL_ID from TB_COOK_LEVEL where LEVEL_TITLE = #{LEVEL_TITLE})
+		]]>
+	</select>
+	
+	<!-- 0503 재현 추가  -->
+	<insert id="insertRecipeContent2" parameterType="RecipeContent">
+		<![CDATA[
+		insert into TB_RECIPE_CONTENT (RECIPE_ID, RECIPE_STEP, CONTENT_CONTENT, CONTENT_IMAGE_URL)
+		values(#{RECIPE_ID},#{RECIPE_STEP},#{CONTENT_CONTENT},#{CONTENT_IMAGE_URL})
+		]]>
+	</insert>
+	
+	
+	
+	<!-- 0504 재현 검색기능 -->
+	<select id="selectRecipeBySearchWord" resultType="Recipe" parameterType="String">
+		<![CDATA[
+		select * from tb_recipe
+		where title like '%'|| #{searchword} || '%'
+		]]>
+	</select>
+	
+	<!-- 0504 재현 검색건수 -->
+	<select id="countRecipeBySearchWord" resultType="int" parameterType="String">
+		<![CDATA[
+		select count(*) from tb_recipe
+		where title like '%'|| #{searchword} || '%'
+		]]>
+	</select>
+
+
+	<!-- 0504 재현 검색건수 -->
+	<select id="countMyRecipe" resultType="int" parameterType="String">
+		<![CDATA[
+		select count(*) from tb_recipe
+		where member_id=#{id }
+		]]>
+	</select>
+
+</mapper>
