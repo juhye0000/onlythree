@@ -10,5 +10,5 @@
 
 ![keyboard cat](https://media.giphy.com/media/LHZyixOnHwDDy/giphy.gif)
 
-###2.프로젝트 운영
+### 2.프로젝트 운영
 https://onlythree.atlassian.net/wiki/spaces/ONLYTHREE/overview?homepageId=32979
