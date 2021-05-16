@@ -9,3 +9,6 @@
 정우리 | 조원 | - Frontend</br> - HTML/CSS 활용 웹 사이트 디자인 설계</br> - 마이페이지 기능 구현 (스크랩/회원 정보 수정/ 회원 탈퇴)</br> - 레시피 작성 폼 및 업로드 기능 구현</br> - 레시피 상세 보기 페이지 구현 
 
 ![keyboard cat](https://media.giphy.com/media/LHZyixOnHwDDy/giphy.gif)
+
+###2.프로젝트 운영
+https://onlythree.atlassian.net/wiki/spaces/ONLYTHREE/overview?homepageId=32979
